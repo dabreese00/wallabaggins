@@ -11,7 +11,7 @@ I mean it's a wallabag command line client.
 Run it like this to see the info on how to use it:
 
 ```
-python wallanew.py -h
+python wallabaggins.py -h
 ```
 
 To make that work, first you might need to `pip install -r requirements.txt`.  (Or you might want to do that inside of a [virtualenv](https://docs.python.org/3/library/venv.html).)
