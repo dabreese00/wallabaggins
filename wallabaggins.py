@@ -1,11 +1,12 @@
 import argparse
-import api
-import entry
 import json
 import os
+import sys
+import api
+import entry
 from wallabag_list import print_entries
 from wallabag_show import html2text
-from conf import Configs, do_conf
+from conf import do_conf
 
 DEFAULT_CONFIG_PATH = ".wallabaggins.conf"
 
@@ -55,7 +56,7 @@ def handle_show(args):
         print("Verbose: Finished showing entry.")
 
 
-def main():
+if __name__ == "__main__":
     do_conf(DEFAULT_CONFIG_PATH)
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", "--verbose", action="store_true", help="enable verbose output")
@@ -73,15 +74,12 @@ def main():
     parser_show.add_argument("entry_id", help="id of the entry")
     parser_show.set_defaults(func=handle_show)
 
-    args = parser.parse_args()
-    
+    passed_args = parser.parse_args()
+
     # If no subcommand is given, print help (or handle differently)
-    if not hasattr(args, 'func'):
+    if not hasattr(passed_args, 'func'):
         parser.print_help()
-        exit(1)
+        sys.exit(1)
 
     # Call the appropriate handler function
-    args.func(args)
-
-if __name__ == "__main__":
-    main()
+    passed_args.func(passed_args)
