@@ -4,6 +4,7 @@ Settings and configuration for wallabag-cli.
 import base64
 import json
 import time
+import re
 from collections import OrderedDict
 # from Crypto.Cipher import AES
 # from Crypto.Hash import MD5
@@ -15,7 +16,16 @@ import socket
 from sys import exit
 
 CONFIG_DIRECTORY = os.path.expanduser("~")
-CONFIG_FILENAME = ".wallabag-cli"
+CONFIG_FILENAME = ".wallabaggins.conf"
+RE_CONFIGLINE = r"^([^=]+)=(.+)$"
+ALLOWED_KEYS = [
+    "serverurl",
+    "username",
+    "password",
+    "client",
+    "secret"
+]
+
 
 __global_custom_path = None
 
@@ -175,16 +185,6 @@ def exist(custom_path=None):
 def save(custom_path=None):
     """
     Saves the config into a file.
-
-    Parameters
-    ----------
-    path : string
-        Optional non default config filename.
-
-    Returns
-    -------
-    bool
-        True if successful
     """
     path = get_path(custom_path)
 
@@ -199,34 +199,20 @@ def save(custom_path=None):
         return False
 
 
-def load(custom_path=None):
+def load(filepath):
     """
     Loads the config into a dictionary.
-
-    Parameters
-    ----------
-    path : string
-        Optional non default config filename.
-
-    Returns
-    -------
-    bool
-        True if successfull. Otherwise the config will be filles with default values
     """
-    path = get_path(custom_path)
-
-    if not exist(path):
-        return False
-    try:
-        with open(path, mode='r') as file:
-            filecontent = file.read()
-            file.close()
-        dic = json.loads(filecontent)
-        return __dicionary2config(dic['wallabag_api'])
-    except json.decoder.JSONDecodeError:
-        return False
-    except PermissionError:
-        return False
+    d = {}
+    r = re.compile(RE_CONFIGLINE)
+    with open(filepath, 'r') as f:
+        for line in f:
+            m = r.match(line)
+            key, value = m.groups()
+            if not key in ALLOWED_KEYS:
+                handle_invalid_config()
+            d[key] = value
+    return d
 
 
 def load_or_create(custom_path=None):
@@ -244,3 +230,13 @@ def load_or_create(custom_path=None):
         print("Error: Could not load or create the config file.")
         print()
         exit(-1)
+
+
+def handle_invalid_config():
+    print("Invalid config file.")
+    exit(1)
+
+
+def do_conf(filepath):
+    for k, v in load(filepath).items():
+        setattr(Configs, k, v)
