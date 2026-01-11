@@ -5,6 +5,7 @@ from enum import Enum
 import json
 import time
 import re
+import os
 import requests
 import conf
 from conf import Configs
@@ -252,6 +253,8 @@ def api_token():
     """
     Creates and returns a valid api-token
     """
+    if os.environ.get("WB_DEBUG"):
+        print("refreshing token...")
     url = __get_api_url(ApiMethod.token)
     data = dict()
     data['grant_type'] = "password"
