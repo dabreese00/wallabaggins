@@ -16,7 +16,7 @@ ALLOWED_KEYS = [
 ]
 
 
-class Configs():
+class Configs():  # pylint: disable=too-few-public-methods
     """
     Static struct for storing the global configs.
     """
@@ -57,7 +57,7 @@ def load(filepath):
     """
     d = {}
     r = re.compile(RE_CONFIGLINE)
-    with open(filepath, 'r') as f:
+    with open(filepath, 'r', encoding='utf-8') as f:
         for line in f:
             m = r.match(line)
             key, value = m.groups()
