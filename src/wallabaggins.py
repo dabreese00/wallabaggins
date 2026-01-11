@@ -15,7 +15,7 @@ def handle_add(args):
     Handler function for the 'add' subcommand.
     """
     if args.verbose:
-        print("Verbose: Adding {}".format(args.url))
+        print(f"Verbose: Adding {args.url}")
     api.api_add_entry(args.url)
     if args.verbose:
         print("Verbose: Finished adding.")
@@ -25,7 +25,7 @@ def handle_list(args):
     Handler function for the 'list' subcommand.
     """
     if args.verbose:
-        print("Verbose: Listing {} entries".format(args.count))
+        print(f"Verbose: Listing {args.count} entries")
     res = api.api_list_entries(args.count)
     res_dict = json.loads(res.response)
     entries = entry.entrylist(res_dict["_embedded"]["items"])
@@ -39,7 +39,7 @@ def handle_show(args):
     Handler function for the 'show' subcommand.
     """
     if args.verbose:
-        print("Verbose: Showing entry {}.".format(args.entry_id))
+        print(f"Verbose: Showing entry {args.entry_id}.")
     res = api.api_get_entry(args.entry_id)
     ent = entry.Entry(json.loads(res.response))
     title = ent.title
@@ -50,8 +50,7 @@ def handle_show(args):
     # piped output to file or other process
     except OSError:
         delimiter = "\n"
-    output = "{0}\n{1}\n{2}".format(title, delimiter, article)
-    print(output)
+    print(f"{title}\n{delimiter}\n{article}")
     if args.verbose:
         print("Verbose: Finished showing entry.")
 
