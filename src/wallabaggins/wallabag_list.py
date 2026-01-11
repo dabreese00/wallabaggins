@@ -6,9 +6,9 @@ import os
 import platform
 import sys
 from sys import exit
-import api
-import conf
-import entry
+from wallabaggins import api
+from wallabaggins import conf
+from wallabaggins import entry
 
 
 def list_entries(custom_quantity=None, filter_read=False, filter_starred=None, oldest=False, trim=True):

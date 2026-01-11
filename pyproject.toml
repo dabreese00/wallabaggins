@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools >= 77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wallabaggins"
+version = "0.0.8"
+authors = [
+  { name = "David Breese", email = "dabreese00@gmail.com" },
+]
+description = "A wallabag CLI client"
+readme = "README.md"
+requires-python = ">=3.14"
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Operating System :: POSIX :: Linux"
+]
+license = "MIT"
+license-files = ["LICENSE"]
+dependencies = [
+  "beautifulsoup4>=4.5.1",
+  "requests>=2.11.1",
+  "secretstorage>=3.5.0"
+]
+
+[project.scripts]
+wallabaggins = "wallabagins:cli"

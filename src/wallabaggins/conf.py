@@ -61,7 +61,7 @@ def load(filepath):
         for line in f:
             m = r.match(line)
             key, value = m.groups()
-            if not key in ALLOWED_KEYS:
+            if key not in ALLOWED_KEYS:
                 handle_invalid_config()
             d[key] = value
     return d
