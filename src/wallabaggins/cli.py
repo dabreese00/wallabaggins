@@ -55,7 +55,10 @@ def handle_show(args):
         print("Verbose: Finished showing entry.")
 
 
-if __name__ == "__main__":
+def app():
+    """
+    Entrypoint for the CLI
+    """
     do_conf(DEFAULT_CONFIG_PATH)
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", "--verbose", action="store_true", help="enable verbose output")
@@ -82,3 +85,7 @@ if __name__ == "__main__":
 
     # Call the appropriate handler function
     passed_args.func(passed_args)
+
+
+if __name__ == "__main__":
+    app()
