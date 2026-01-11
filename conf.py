@@ -1,22 +1,12 @@
 """
 Settings and configuration for wallabag-cli.
 """
-import base64
-import json
 import time
 import re
 from collections import OrderedDict
-# from Crypto.Cipher import AES
-# from Crypto.Hash import MD5
-import getpass
-import math
 import os
-from pathlib import Path
-import socket
 from sys import exit
 
-CONFIG_DIRECTORY = os.path.expanduser("~")
-CONFIG_FILENAME = ".wallabaggins.conf"
 RE_CONFIGLINE = r"^([^=]+)=(.+)$"
 ALLOWED_KEYS = [
     "serverurl",
@@ -25,9 +15,6 @@ ALLOWED_KEYS = [
     "client",
     "secret"
 ]
-
-
-__global_custom_path = None
 
 
 class Configs():
