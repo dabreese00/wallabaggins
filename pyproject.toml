@@ -23,5 +23,8 @@ dependencies = [
   "secretstorage>=3.5.0"
 ]
 
+[project.urls]
+Homepage = "https://github.com/dabreese00/wallabaggins"
+
 [project.scripts]
 wallabaggins = "wallabaggins.cli:app"
