@@ -5,10 +5,11 @@ from enum import Enum
 import json
 import time
 import re
+import sys
 import os
 import requests
-import conf
-from conf import Configs
+from wallabaggins import conf
+from wallabaggins.conf import Configs
 
 
 MINIMUM_API_VERSION = 2, 1, 1

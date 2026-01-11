@@ -1,16 +1,14 @@
 """
 Show a wallabag entry
 """
-import io
 # import formatter
 import json
 import os
 from sys import exit
-import sys
 from bs4 import BeautifulSoup
-import api
-import conf
-import entry
+from wallabaggins import api
+from wallabaggins import conf
+from wallabaggins import entry
 
 
 def show(entry_id, colors=True, raw=False, html=False):

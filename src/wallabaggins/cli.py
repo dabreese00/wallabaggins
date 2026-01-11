@@ -2,11 +2,11 @@ import argparse
 import json
 import os
 import sys
-import api
-import entry
-from wallabag_list import print_entries
-from wallabag_show import html2text
-from conf import do_conf
+from wallabaggins import api
+from wallabaggins import entry
+from wallabaggins.wallabag_list import print_entries
+from wallabaggins.wallabag_show import html2text
+from wallabaggins.conf import do_conf
 
 DEFAULT_CONFIG_PATH = ".wallabaggins.conf"
 
