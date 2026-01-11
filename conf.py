@@ -3,9 +3,8 @@ Settings and configuration for wallabag-cli.
 """
 import time
 import re
-from collections import OrderedDict
 import os
-from sys import exit
+import sys
 
 RE_CONFIGLINE = r"^([^=]+)=(.+)$"
 ALLOWED_KEYS = [
@@ -45,7 +44,7 @@ def is_token_expired():
     return Configs.expires - time.time() < 0
 
 
-def save(custom_path=None):
+def save():
     """
     Saves the config into a file.
     """
@@ -70,7 +69,7 @@ def load(filepath):
 
 def handle_invalid_config():
     print("Invalid config file.")
-    exit(1)
+    sys.exit(1)
 
 
 def do_conf(filepath):
