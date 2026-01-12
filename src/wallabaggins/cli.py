@@ -10,6 +10,7 @@ from wallabaggins.conf import do_conf
 
 DEFAULT_CONFIG_PATH = ".wallabaggins.conf"
 
+
 def handle_add(args):
     """
     Handler function for the 'add' subcommand.
@@ -19,6 +20,7 @@ def handle_add(args):
     api.api_add_entry(args.url)
     if args.verbose:
         print("Verbose: Finished adding.")
+
 
 def handle_list(args):
     """
