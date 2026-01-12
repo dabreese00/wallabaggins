@@ -8,7 +8,7 @@ from wallabaggins.wallabag_list import print_entries
 from wallabaggins.wallabag_show import html2text
 from wallabaggins.conf import do_conf
 
-DEFAULT_CONFIG_PATH = ".wallabaggins.conf"
+DEFAULT_CONFIG_PATH = os.environ.get("HOME") + "/.wallabaggins.conf"
 
 
 def handle_add(args):
@@ -61,10 +61,22 @@ def app():
     """
     Entrypoint for the CLI
     """
-    do_conf(DEFAULT_CONFIG_PATH)
     parser = argparse.ArgumentParser()
-    parser.add_argument("-v", "--verbose", action="store_true", help="enable verbose output")
-    subparsers = parser.add_subparsers(title="subcommands", help="available subcommands")
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        action="store_true",
+        help="enable verbose output"
+    )
+    parser.add_argument(
+        "--configfile",
+        type=str,
+        help="specify the path to the config file to use (default: $HOME/.wallabaggins.conf)"
+    )
+    subparsers = parser.add_subparsers(
+        title="subcommands",
+        help="available subcommands"
+    )
 
     parser_add = subparsers.add_parser("add", help="Add an entry")
     parser_add.add_argument("url", help="the url to add")
@@ -84,6 +96,14 @@ def app():
     if not hasattr(passed_args, 'func'):
         parser.print_help()
         sys.exit(1)
+
+    if passed_args.configfile:
+        config_path = passed_args.configfile
+    else:
+        config_path = DEFAULT_CONFIG_PATH
+    if passed_args.verbose:
+        print(f"loading {config_path}")
+    do_conf(config_path)
 
     # Call the appropriate handler function
     passed_args.func(passed_args)
