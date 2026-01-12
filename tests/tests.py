@@ -4,6 +4,7 @@ from argparse import Namespace
 from wallabaggins import entry
 from wallabaggins import cli
 from wallabaggins import api
+from wallabaggins import conf
 
 
 class TestEntry(unittest.TestCase):
@@ -92,3 +93,29 @@ class TestCli(unittest.TestCase):
         args.entry_id = 0
 
         cli.handle_show(args)
+
+
+class TestConf(unittest.TestCase):
+    """
+    Tests for the conf module
+    """
+
+    @patch("wallabaggins.conf.load")
+    def test_do_conf(self, load):
+        """
+        Test the do_conf method
+        """
+        load.return_value = '''
+serverurl=https://example.com
+username=myuser
+password=abc123
+client=14331
+secret=asfsdfsd
+'''
+        conf.do_conf("/home/wallabaggins/.conf")
+
+        self.assertEqual(conf.Configs.serverurl, "https://example.com")
+        self.assertEqual(conf.Configs.username, "myuser")
+        self.assertEqual(conf.Configs.password, "abc123")
+        self.assertEqual(conf.Configs.client, "14331")
+        self.assertEqual(conf.Configs.secret, "asfsdfsd")

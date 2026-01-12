@@ -6,14 +6,6 @@ import re
 import os
 import sys
 
-RE_CONFIGLINE = r"^([^=]+)=(.+)$"
-ALLOWED_KEYS = [
-    "serverurl",
-    "username",
-    "password",
-    "client",
-    "secret"
-]
 
 
 class Configs():  # pylint: disable=too-few-public-methods
@@ -53,25 +45,30 @@ def save():
 
 def load(filepath):
     """
-    Loads the config into a dictionary.
+    Loads the config to a string
     """
-    d = {}
-    r = re.compile(RE_CONFIGLINE)
     with open(filepath, 'r', encoding='utf-8') as f:
-        for line in f:
-            m = r.match(line)
-            key, value = m.groups()
-            if key not in ALLOWED_KEYS:
-                handle_invalid_config()
-            d[key] = value
-    return d
+        return f.read()
 
 
 def handle_invalid_config():
+    """
+    Handle case where the config parse fails
+    """
     print("Invalid config file.")
     sys.exit(1)
 
 
 def do_conf(filepath):
-    for k, v in load(filepath).items():
-        setattr(Configs, k, v)
+    """
+    Parse the contents of the config
+    """
+    r = re.compile(r"^([^=]+)=(.+)$")
+    for line in load(filepath).splitlines():
+        if not line:
+            continue
+        m = r.match(line)
+        key, value = m.groups()
+        if not hasattr(Configs, key):
+            handle_invalid_config()
+        setattr(Configs, key, value)
