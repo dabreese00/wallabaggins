@@ -14,9 +14,23 @@ Install it with `pip`, then run:
 wallabaggins -h
 ```
 
-You will be prompted for your Wallabag login info, or you can make a config file to store it.
+You will be prompted for your Wallabag login info and API key, or you can make a config file to store it.
 
-Note, I don't recommend storing your password and client secret in a plain text config file.  If you are running a desktop compatible with Freedesktop.org's [Secret Service](https://specifications.freedesktop.org/secret-service/latest/index.html), then these secrets will be saved in your keyring.
+The config file would look like:
+
+```
+serverurl=https://my.wallabag.site
+username=myuser
+client=myapiclientid
+```
+
+## Obligatory security note
+
+You could also include `password` (your Wallabag password) and `secret` (the API client secret) in the config file, but you may not like the risk of storing your secrets in a plain text file.  For now, your alternatives are:
+
+1. You can set the environment variables `WBGINS_PASSWORD` and `WBGINS_SECRET`.
+2. If you have a desktop keyring compatible with Freedesktop.org's [Secret Service](https://specifications.freedesktop.org/secret-service/latest/index.html), then wallabaggins will offer to store these secrets in your keyring for you, and should load them automatically next time you run a command.
+3. If neither of those works for you, you can keep entering them at the prompt every time.
 
 ## Some other facts
 

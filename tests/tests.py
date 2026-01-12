@@ -100,9 +100,8 @@ class TestConf(unittest.TestCase):
     Tests for the conf module
     """
 
-    @patch("wallabaggins.conf.prompt_for_missing_configs")
     @patch("wallabaggins.conf.load")
-    def test_do_conf(self, load, prompt_for_missing_configs):
+    def test_do_conf(self, load):
         """
         Test the do_conf method
         """
