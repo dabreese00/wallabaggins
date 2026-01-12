@@ -14,9 +14,9 @@ Install it with `pip`, then run:
 wallabaggins -h
 ```
 
-You will need a config file.
+You will be prompted for your Wallabag login info, or you can make a config file to store it.
 
-More details to come.
+Note, I don't recommend storing your password and client secret in a plain text config file.  If you are running a desktop compatible with Freedesktop.org's [Secret Service](https://specifications.freedesktop.org/secret-service/latest/index.html), then these secrets will be saved in your keyring.
 
 ## Some other facts
 

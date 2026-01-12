@@ -5,7 +5,10 @@ import time
 import re
 import os
 import sys
+from getpass import getpass
 
+
+DEFAULT_CONFIG_PATH = os.environ.get("HOME") + "/.wallabaggins.conf"
 
 
 class Configs():  # pylint: disable=too-few-public-methods
@@ -59,12 +62,17 @@ def handle_invalid_config():
     sys.exit(1)
 
 
-def do_conf(filepath):
+def config_from_file(filepath):
     """
     Parse the contents of the config
     """
     r = re.compile(r"^([^=]+)=(.+)$")
-    for line in load(filepath).splitlines():
+    try:
+        lines = load(filepath).splitlines()
+    except FileNotFoundError:
+        print("Could not find config file.")
+        lines = ""
+    for line in lines:
         if not line:
             continue
         m = r.match(line)
@@ -72,3 +80,28 @@ def do_conf(filepath):
         if not hasattr(Configs, key):
             handle_invalid_config()
         setattr(Configs, key, value)
+
+
+def prompt_for_missing_configs():
+    """
+    Prompt the user for missing config items they might know
+    """
+    user_config_items = [
+        'serverurl',
+        'username',
+        'password',
+        'client',
+        'secret'
+    ]
+    for attr in user_config_items:
+        if not getattr(Configs, attr):
+            v = getpass(prompt=attr+": ")
+            setattr(Configs, attr, v)
+
+
+def do_conf(filepath=DEFAULT_CONFIG_PATH):
+    """
+    Get the config from wherever
+    """
+    config_from_file(filepath)
+    prompt_for_missing_configs()
