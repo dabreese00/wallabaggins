@@ -8,8 +8,6 @@ from wallabaggins.wallabag_list import print_entries
 from wallabaggins.wallabag_show import html2text
 from wallabaggins.conf import do_conf
 
-DEFAULT_CONFIG_PATH = os.environ.get("HOME") + "/.wallabaggins.conf"
-
 
 def handle_add(args):
     """
@@ -98,12 +96,9 @@ def app():
         sys.exit(1)
 
     if passed_args.configfile:
-        config_path = passed_args.configfile
+        do_conf(passed_args.configfile)
     else:
-        config_path = DEFAULT_CONFIG_PATH
-    if passed_args.verbose:
-        print(f"loading {config_path}")
-    do_conf(config_path)
+        do_conf()
 
     # Call the appropriate handler function
     passed_args.func(passed_args)
