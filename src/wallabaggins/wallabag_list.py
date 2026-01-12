@@ -15,7 +15,6 @@ def list_entries(custom_quantity=None, filter_read=False, filter_starred=None, o
     """
     Main function for listing wallabag entries.
     """
-    conf.load()
 
     quantity = None
     if custom_quantity is None:
@@ -48,7 +47,6 @@ def count_entries(filter_read=False, filter_starred=None):
     """
     Prints the number of entries to the standard output.
     """
-    conf.load()
 
     try:
         request = api.api_list_entries(

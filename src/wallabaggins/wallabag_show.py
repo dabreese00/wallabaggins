@@ -15,7 +15,6 @@ def show(entry_id, colors=True, raw=False, html=False):
     """
     Main function for showing an entry.
     """
-    conf.load()
     try:
         request = api.api_get_entry(entry_id)
         __handle_request_error(request)
